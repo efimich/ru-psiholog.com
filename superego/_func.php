@@ -2,6 +2,8 @@
 
 function do_create($user) {
 
+    // need to check, if user already created...
+
     // create questions in table
     for ($i=1;$i<112;$i++) {
         $q = "INSERT INTO entries (username, q_num) VALUES ('".$user."', '".$i."'); ";
@@ -27,21 +29,5 @@ function do_replace($content) {
     return $content;
 };
 
-
-function make_format($content) {
-    global $q2f_arr;
-
-    foreach ($q2f_arr as $q) {
-       $content = str_replace($q,"NNNNN",$content);
-    };
-    $content = trim($content,"\n\r ");
-
-    $arr = explode("NNNNN",$content);
-
-    // first element empty and not needed
-    array_shift($arr);
-
-    return $arr;
-};
 
 ?>

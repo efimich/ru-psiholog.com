@@ -47,28 +47,9 @@ if ($step == 37) {
 
 <?php
 
-
 if ($step == 1) {
-    $udata = $_POST["userdata"];
-
-    /*
-    $ttt = explode("\n",$udata);
-    if (count($ttt) !=333) {
-        echo "Ответ на задание должен содержать ровно 333 строки (по 3 строки на один вопрос)\n";
-        exit(1);
-    };
-    */
-
-    if (file_exists("userdata/{$user}.txt")){
-        echo "Файл результатами этого пользователя уже есть<br/>\n";
-        echo "Если он был создан ошибочно, используйте немного другое имя пользователя, например {$user}1<br/>\n";
-        exit(1);
-    };
-
-    file_put_contents("userdata/{$user}.txt", $udata);
+    //needed this now?
 };
-
-
 
 
 $content = file_get_contents("material/part$step.txt");
@@ -80,6 +61,12 @@ $content = nl2br($content);
 
 <div class='entry'>
     Как следует поступать в данной ситуации?<br />
+</div>
+
+<br/>
+
+<div class='entry'>
+    <? echo $content; ?>
 </div>
 
 <?
@@ -153,6 +140,7 @@ if(mysql_num_rows($r)>0):
             $answer = trim($arr[$t]," \n\r");
             echo $answer;
         ?>
+
 	</span>
 <br/>
 <div style="text-align: right;">
@@ -179,15 +167,18 @@ endif;
 <br/>
 
 <center>
-<form action="compare.php" method="GET">
+<form style="display: inline;" action="compare.php" method="GET">
+<input type="hidden" name="step" value="<? echo $step-1; ?>" />
+<input type="submit" value="&nbsp;&nbsp;&nbsp;Prev&nbsp;&nbsp;&nbsp;" />
+</form>
+
+<form style="display: inline;" action="compare.php" method="GET">
 <input type="hidden" name="step" value="<? echo $step+1; ?>" />
 <input type="submit" value="&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;" />
 </form>
 </center>
 
 <br/>
-<!-- <center><a href="compare.php?step=<? echo $step-1; ?>" />Prev</a></center> -->
-
 <br/>
 <br/>
 

@@ -25,6 +25,7 @@ if (strlen($user)>0){
     do_create($user);
 };
 
+
 //
 // load user from session
 //
@@ -48,18 +49,20 @@ if ($step <= 0) {
 
 $save_qarr = $_POST["save_qarr"];
 if (strlen($save_qarr)>0){
-    $sdata = "";
     $form_arr=explode(",", $save_qarr);
     foreach ($form_arr as $save_qnum) {
         $tmp = "text".$save_qnum;
+        $textq = $q_arr[$save_qnum];
         $textd = $_POST["$tmp"];
-        if (strlen($textd)>0){
-            $textq = $q_arr[$save_qnum];
-            $sdata.= $textq."\n";
-            $sdata.= $textd."\n\n";
-        };
+
+        $textq = trim($textq,"\r\n ");
+        $textd = trim($textd,"\r\n ");
+
+        $sdata = $textq."\n";
+        $sdata.= $textd."\n";
+        $sdata.= "\n";
+        file_put_contents("userdata/{$user}.txt", $sdata, FILE_APPEND);
     };
-    file_put_contents("userdata/{$user}.txt", $sdata, FILE_APPEND);
 };
 
 
@@ -130,7 +133,6 @@ $q.= " ORDER BY id";
 
 $r = mysql_query($q);
 
-
 $q_form_arr = "";
 
 if(mysql_num_rows($r)>0):
@@ -155,7 +157,7 @@ if(mysql_num_rows($r)>0):
 
 <div class='entry'>
 	<span class='link'>
-        <textarea style="width: 705px; height: 80px;" name="text<? echo $q_num; ?>"><? echo $answer; ?></textarea>
+        <textarea style="width: 705px; height: 80px;" name="text<? echo $q_num; ?>"></textarea>
 	</span>
 <br/>
 </div>
@@ -168,6 +170,11 @@ endif;
 
 <br/>
 <br/>
+
+<? 
+    // remove last comma, for not create last empty element in q_arr array
+    $q_form_arr = trim($q_form_arr,",");
+?>
 
 <center>
 <input type="hidden" name="step" value="<? echo $step+1; ?>" />

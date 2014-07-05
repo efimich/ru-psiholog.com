@@ -41,11 +41,17 @@ if (strlen($user)==0){
 </div>
 
 <br/>
-<br/>
+
+<div class='entryshow'>
 <center><a href="/superego/compare.php?step=1" target="_blank">проверить свои ответы</a></center>
+</div>
+
 <br/>
 <br/>
+<br/>
+
 <center>[ <a href="/superego/">на главную</a> ]</center>
+
 <br/>
 <br/>
 <br/>
